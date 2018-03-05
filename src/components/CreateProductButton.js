@@ -30,7 +30,7 @@ export class CreateProductButton extends React.Component {
             //prepare formData
 
             const formData = new FormData();
-            formData.append('name', form.getFieldValue('name'));
+            formData.append('name', 'testname');
             formData.append('price', form.getFieldValue('price'));
             formData.append('image', form.getFieldValue('image')[0]);
 
@@ -39,17 +39,18 @@ export class CreateProductButton extends React.Component {
             //send request
             this.setState({ confirmLoading: true });
 
+
             $.ajax({
-                method: 'POST',
+                type: 'POST',
                 url: `${API_ROOT}/post`,
-                headers: {
-                    Authorization: `${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`,
-                },
-              //  enctype: '',
-                // processData: false,
-                 contentType: false,
-                //dataType: 'text',
-               // data: formData,
+                // beforeSend: function(xhrObj){
+                //     xhrObj.setRequestHeader("Content-Type","application/json");
+                //     xhrObj.setRequestHeader("Authorization",`${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`);
+                // },
+                processData: false,
+                contentType: false,
+                dataType: 'text',
+                data: formData,
             }).then(() => {
                 message.success('created a product successfully.');
                 form.resetFields();
